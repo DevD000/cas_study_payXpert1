@@ -1,10 +1,10 @@
 import pyodbc
 from DAO import EmployeeService,TaxService
-
+from DAO.payroll_service import PayrollService
 class MainMenu:
     employee_service = EmployeeService()
     tax_service = TaxService()
-
+    payroll_service = PayrollService()
 
     def employee_management(self):
         while True:
@@ -63,11 +63,11 @@ class MainMenu:
         while True:
             print(
                 """
-                   1. Calculate tax for an employee
-                   2. Get tax by ID
-                   3. Get taxes for an employee
-                   4. Get taxes for a year
-                   5. Back to Main Menu
+                   1] Calculate tax for an employee
+                   2] Get tax by ID
+                   3] Get taxes for an employee
+                   4] Get taxes for a year
+                   5] Back to Main Menu
                    """
             )
             choice = input("Enter your choice: ")
@@ -90,7 +90,38 @@ class MainMenu:
             else:
                 print("Invalid choice. Please enter a valid option.")
 
-
+    def payroll_management(self):
+        
+        while True:
+            print(
+                """
+                   1] Generate payroll for an employee
+                   2] Get payroll by ID
+                   3] Get payrolls for an employee
+                   4] Get payrolls for a period
+                   5] Back to Main Menu
+            """
+            )
+            choice = input("Enter your choice: ")
+            if choice == "1":
+                employee_id = input("Enter EmployeeID: ")
+                start_date = input("Enter Pay Period Start Date (YYYY-MM-DD): ")
+                end_date = input("Enter Pay Period End Date (YYYY-MM-DD): ")
+                self.payroll_service.generate_payroll(employee_id, start_date, end_date)
+            elif choice == "2":
+                payroll_id = input("Enter PayrollID: ")
+                self.payroll_service.payroll_by_id(payroll_id)
+            elif choice == "3":
+                employee_id = input("Enter EmployeeID: ")
+                self.payroll_service.payroll_by_employee(employee_id)
+            elif choice == "4":
+                start_date = input("Enter Start Date (YYYY-MM-DD): ")
+                end_date = input("Enter End Date (YYYY-MM-DD): ")
+                self.payroll_service.get_payrolls_for_period(start_date, end_date)
+            elif choice == "5":
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")           
 
 
 
@@ -109,8 +140,8 @@ def main():
 
         if choice == "1":
             main_menu.employee_management()
-        # elif choice == "2":
-        #     main_menu.payroll_management()
+        elif choice == "2":
+            main_menu.payroll_management()
         elif choice == "3":
             main_menu.tax_management()
         # elif choice == "4":

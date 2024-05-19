@@ -17,7 +17,7 @@ class TaxService(DBconnection):
             result = self.cursor.fetchone()
             if result and result[0] is not None:
                 total_taxable_income = float(result[0])
-            print(type(total_taxable_income))
+           #  print(type(total_taxable_income))
             tax_rate = 0.18
             tax_amount = total_taxable_income * tax_rate
 
