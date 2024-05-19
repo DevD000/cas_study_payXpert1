@@ -1,6 +1,13 @@
+import pyodbc
+from DAO import EmployeeService,TaxService
+
 class MainMenu:
+    employee_service = EmployeeService()
+    tax_service = TaxService()
+
+
     def employee_management(self):
-        while true:
+        while True:
             print("1] Create an employee")
             print("2] Delete an employee")
             print("3] Read employee")
@@ -21,40 +28,100 @@ class MainMenu:
                     input("Enter joining date (YYYY-MM-DD): "),
                     input("Enter termination date (YYYY-MM-DD, if any): "),
                 )
+                self.employee_service.create_employee(employee_data)
+                print("New employee added 🎊 ")
+            elif choice == "2":
+                self.employee_service.read_employees()
+                employee_id = input("Enter the EmployeeID: ")
+                self.employee_service.delete_employee(employee_id)
+            elif choice == "3":
+                self.employee_service.read_employees()
+            elif choice == "4":
+                self.employee_service.read_employees()
+                employee_data = (
+                    input("Enter first name: "),
+                    input("Enter last name: "),
+                    input("Enter date of birth (YYYY-MM-DD): "),
+                    input("Enter gender: "),
+                    input("Enter email: "),
+                    input("Enter phone number: "),
+                    input("Enter address: "),
+                    input("Enter position: "),
+                    input("Enter joining date (YYYY-MM-DD): "),
+                    input("Enter termination date (YYYY-MM-DD, if any): "),
+                    input("Enter the EmployeeID to update: "),
+                )
+                self.employee_service.update_employee(employee_data)
+            elif choice == "5":
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")    
 
+
+    def tax_management(self):
+
+        while True:
+            print(
+                """
+                   1. Calculate tax for an employee
+                   2. Get tax by ID
+                   3. Get taxes for an employee
+                   4. Get taxes for a year
+                   5. Back to Main Menu
+                   """
+            )
+            choice = input("Enter your choice: ")
+
+            if choice == "1":
+                employee_id = input("Enter EmployeeID: ")
+                tax_year = input("Enter Tax Year: ")
+                self.tax_service.calculate_tax(employee_id, tax_year)
+            elif choice == "2":
+                tax_id = input("Enter TaxID: ")
+                self.tax_service.get_tax_by_id(tax_id)
+            elif choice == "3":
+                employee_id = input("Enter EmployeeID: ")
+                self.tax_service.get_taxes_for_employee(employee_id)
+            elif choice == "4":
+                tax_year = input("Enter Tax Year: ")
+                self.tax_service.get_taxes_for_year(tax_year)
+            elif choice == "5":
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")
 
 
 
 
 
 def main():
-
+    main_menu = MainMenu()
     while True:
         print(
             """Main Menu:
-            1. Employee Management
-            2. Payroll Management
-            3. Tax Management
-            4. Financial Record Management
-            5. Exit"""
+            1] Employee Management
+            2] Payroll Management
+            3] Tax Management
+            4] Financial Record Management
+            5] Exit"""
         )
         choice = input("Enter your choice: ")
 
         if choice == "1":
             main_menu.employee_management()
-        elif choice == "2":
-            main_menu.payroll_management()
+        # elif choice == "2":
+        #     main_menu.payroll_management()
         elif choice == "3":
             main_menu.tax_management()
-        elif choice == "4":
-            main_menu.financial_record_management()
+        # elif choice == "4":
+        #     main_menu.financial_record_management()
         elif choice == "5":
-            print("Goodbye! Come back soon")
-            break
+             print("Goodbye! Come back soon")
+             break
         else:
             print("Invalid choice. Please enter a valid option.")
 
 
 if __name__ == "__main__":
     print("Welcome to payroll management system")
-    main()
+    main() 
