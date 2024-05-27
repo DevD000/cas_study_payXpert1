@@ -18,7 +18,12 @@ class TaxService(DBconnection):
             if result and result[0] is not None:
                 total_taxable_income = float(result[0])
            #  print(type(total_taxable_income))
-            tax_rate = 0.18
+            if total_taxable_income<60000:
+                tax_rate = 0.15
+            elif 60000<=total_taxable_income<70000:
+                tax_rate=0.20
+            else:
+                tax_rate=0.30    
             tax_amount = total_taxable_income * tax_rate
 
             print(

@@ -3,7 +3,14 @@ from Util.DBConnUtil import DBconnection
 from Exception.custom_exception import FinancialRecordException
 
 class FinnancialRecordService(DBconnection):
-
+    def read_financial_record(self):
+        try:
+            self.cursor.execute("SELECT * FROM financialrecord")
+            records = self.cursor.fetchall()
+            for record in records:
+                print(record)
+        except Exception as e:
+            print(e)
     def add_finnancial_record(self,record_id,employee_id, description, amount, record_type):
         try:
             self.cursor.execute("insert into financialrecord (RecordID, EmployeeID, RecordDate, Description, Amount, RecordType) values(?,?,?,?,?,?) ",(record_id,employee_id,datetime.now() ,description, amount, record_type))
@@ -46,4 +53,13 @@ class FinnancialRecordService(DBconnection):
                 print(record)
         except Exception as e:
             print(e)
-  
+
+        
+        
+        # try:
+        #     self.cursor.execute("select * from financialRecord")
+        #     records=self.cursor.fetchall()
+        #     for record in records:
+        #         print(record)
+        # except Exception as e:
+        #     print(e)

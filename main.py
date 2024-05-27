@@ -54,10 +54,13 @@ class MainMenu:
                     input("Enter the EmployeeID to update- "),
                 )
                 self.employee_service.update_employee(employee_data)
+
+                print("Here is updated data")
+                self.employee_service.read_employees()
             elif choice == "5":
                 break
             else:
-                print("Invalid choice. Please enter a valid option.")    
+                print("Invalid choice. Please enter a valid option.")
 
 
     def tax_management(self):
@@ -159,10 +162,11 @@ class MainMenu:
             elif choice == "4":
                 record_date = input("Enter Record Date (YYYY-MM-DD) - ")
                 self.financial_record.get_financial_records_for_date(record_date)
-            elif choice=='6':
-                self.financial_record.read_financial_record()
+            
             elif choice == "5":
                 break
+            elif choice =="6":
+                self.financial_record.read_financial_record()
             else:
                 print("Invalid choice ❌. Please enter a valid input.")
 
@@ -193,6 +197,10 @@ def main():
             main_menu.financial_record_management()
         elif choice == "5":
              print("Goodbye! Come back soon")
+             main_menu.employee_service.close()
+             main_menu.financial_record.close()
+             main_menu.payroll_service.close()
+             main_menu.tax_service.close()
              break
         else:
             print("Invalid choice ❌. Please enter a valid input.")
